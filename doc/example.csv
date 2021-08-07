@@ -1,0 +1,5 @@
+Table,Column,Type
+User,first_name,FIRST_NAME
+User,last_name,LAST_NAME
+User,username,USERNAME
+User,password,RANDOM_STRING
