@@ -21,7 +21,7 @@ class CsvReaderTest {
     @Test
     public void testReadCsvConfig_validConfiguration_shouldPass() {
         final List<TableColumnSpecification> specifications = CsvReader
-            .readCsvConfig(getReaderWithTitleForContent("a,b,FIRST_NAME"));
+            .readCsvConfig(getReaderWithTitleForContent("a,id,b,FIRST_NAME"));
 
         assertThat(specifications, hasSize(1));
 
@@ -44,27 +44,23 @@ class CsvReaderTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-        "a,b,UNKNOWN_ENUM",
-        ",b,FIRST_NAME",
-        "a,,FIRST_NAME",
-        "a,b,"
+        "a,id,b,UNKNOWN_ENUM",
+        ",id,b,FIRST_NAME",
+        "a,id,,FIRST_NAME",
+        "a,b,,"
     })
     public void testReadCsvConfig_invalidConfig_shouldFail(String contentLine) {
-        assertThrows(RuntimeException.class, () -> {
-            CsvReader.readCsvConfig(getReaderWithTitleForContent(contentLine));
-        });
+        assertThrows(RuntimeException.class, () -> CsvReader.readCsvConfig(getReaderWithTitleForContent(contentLine)));
     }
 
     @Test
     public void testReadCsvConfig_missingHeaderLine_shouldFail() {
-        assertThrows(RuntimeException.class, () -> {
-            CsvReader.readCsvConfig(getInvalidConfigContentsMissingHeaderRow());
-        });
+        assertThrows(RuntimeException.class, () -> CsvReader.readCsvConfig(getInvalidConfigContentsMissingHeaderRow()));
     }
 
     private Reader getReaderWithTitleForContent(final String contentLine) {
         final String csvContent = Stream.of(
-                "Table,Column,Type",
+                "Table,PrimaryKey,Column,Type",
                 contentLine)
             .collect(Collectors.joining(System.lineSeparator()));
 
@@ -72,7 +68,7 @@ class CsvReaderTest {
     }
 
     private Reader getInvalidConfigContentsMissingHeaderRow() {
-        final String csvContent = Stream.of("a,b,FIRST_NAME").collect(Collectors.joining(System.lineSeparator()));
+        final String csvContent = Stream.of("a,id,b,FIRST_NAME").collect(Collectors.joining(System.lineSeparator()));
 
         return new StringReader(csvContent);
     }

@@ -6,6 +6,9 @@ public class TableColumnSpecification {
     @CsvBindByName(column = "Table", required = true)
     private String tableName;
 
+    @CsvBindByName(column = "PrimaryKey", required = true)
+    private String primaryKey;
+
     @CsvBindByName(column = "Column", required = true)
     private String columnName;
 
@@ -18,6 +21,14 @@ public class TableColumnSpecification {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
+    }
+
+    public String getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(String primaryKey) {
+        this.primaryKey = primaryKey;
     }
 
     public String getColumnName() {
@@ -40,6 +51,7 @@ public class TableColumnSpecification {
     public String toString() {
         return "TableColumnSpecification{" +
             "tableName='" + tableName + '\'' +
+            ", primaryKey='" + primaryKey + '\'' +
             ", columnName='" + columnName + '\'' +
             ", columnType=" + columnType +
             '}';

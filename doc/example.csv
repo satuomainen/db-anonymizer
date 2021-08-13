@@ -1,5 +1,5 @@
-Table,Column,Type
-User,first_name,FIRST_NAME
-User,last_name,LAST_NAME
-User,username,USERNAME
-User,password,RANDOM_STRING
+Table,PrimaryKey,Column,Type
+User,id,first_name,FIRST_NAME
+User,id,last_name,LAST_NAME
+User,id,username,USERNAME
+User,id,password,RANDOM_STRING
